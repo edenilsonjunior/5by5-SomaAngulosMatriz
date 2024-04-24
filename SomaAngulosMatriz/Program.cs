@@ -37,7 +37,7 @@ for (int l = 0; l < qntlinhas; l++)
 Console.WriteLine("=============================");
 
 
-// Soma das matrizes
+// Soma de cada linha
 Console.WriteLine("Soma de cada linha:");
 for (int l = 0; l < qntlinhas; l++)
 {
@@ -65,7 +65,7 @@ for (int l = 0; l < qntlinhas; l++)
 Console.WriteLine("=============================");
 
 
-// Soma das colunas
+// Soma da diagonal
 Console.WriteLine("Soma na direita pra esquerda:");
 soma = 0;
 for (int l = 0; l < qntlinhas; l++)
@@ -76,7 +76,7 @@ Console.WriteLine($"Resultado = {soma}");
 Console.WriteLine("=============================");
 
 
-// Soma das colunas
+// Soma da diagonal
 Console.WriteLine("Soma na esquerda pra direita:");
 soma = 0;
 
