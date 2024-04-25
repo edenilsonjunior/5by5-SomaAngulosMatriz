@@ -5,88 +5,145 @@
     C) Soma de cada diagonal da matriz
  */
 
-Console.WriteLine("=====Manipulando Matrizes=====");
+/*Functions*/
 
-int qntlinhas = 3;
-int qntColunas = 3;
-int[,] matriz = new int[qntlinhas, qntColunas];
-Random random = new Random();
-int soma = 0;
-
-
-// Criacao das matrizes 1 e 2
-for (int l = 0; l < qntlinhas; l++)
+int Menu()
 {
-    for (int c = 0; c < qntColunas; c++)
+    int option;
+    do
     {
-        matriz[l, c] = random.Next(1, 4);
+        PrintLine();
+        Console.WriteLine("Enter your option");
+        Console.WriteLine("1- Sum of each row of the matrix");
+        Console.WriteLine("2- Sum of each column of the matrix");
+        Console.WriteLine("3- Sum of each diagonal of the matrix");
+        Console.WriteLine("0- Exit");
+        Console.Write("Your choice: ");
+        option = int.Parse(Console.ReadLine());
+        PrintLine();
 
+    } while (option < 0 || option > 3);
+
+    return option;
+}
+
+void SortMatrix(int[,] matrix, int lines, int columns)
+{
+    Random random = new();
+
+    for (int l = 0; l < lines; l++)
+    {
+        for (int c = 0; c < columns; c++)
+        {
+            matrix[l, c] = random.Next(1, 10);
+        }
+    }
+}
+void PrintMatrix(int[,] matrix, int lines, int columns, string title)
+{
+    Console.WriteLine(title);
+    for (int l = 0; l < lines; l++)
+    {
+        for (int c = 0; c < columns; c++)
+        {
+            Console.Write($"{matrix[l, c]} ");
+        }
+        Console.WriteLine();
     }
 }
 
-
-Console.WriteLine("Matriz:");
-for (int l = 0; l < qntlinhas; l++)
+void SumLines(int[,] matrix, int lines, int columns)
 {
-    for (int c = 0; c < qntColunas; c++)
+    Console.WriteLine("Sum of each row of the matrix:");
+
+    int sum = 0;
+    for (int l = 0; l < lines; l++)
     {
-        Console.Write($"{matriz[l, c]} ");
+        sum = 0;
+        for (int c = 0; c < columns; c++)
+        {
+            sum += matrix[l, c];
+        }
+        Console.WriteLine($"Line[{l}] = {sum}");
     }
-    Console.WriteLine();
+    PrintLine();
 }
-Console.WriteLine("=============================");
 
-
-// Soma de cada linha
-Console.WriteLine("Soma de cada linha:");
-for (int l = 0; l < qntlinhas; l++)
+void SumColumns(int[,] matrix, int lines, int columns)
 {
-    soma = 0;
-    for (int c = 0; c < qntColunas; c++)
+    Console.WriteLine("Sum of each column of the matrix:");
+
+    int sum = 0;
+    for (int l = 0; l < lines; l++)
     {
-        soma += matriz[l, c];
+        sum = 0;
+        for (int c = 0; c < columns; c++)
+        {
+            sum += matrix[c, l];
+        }
+        Console.WriteLine($"Column[{l}] = {sum}");
     }
-    Console.WriteLine($"Linha[{l}] = {soma}");
+    PrintLine();
+
 }
-Console.WriteLine("=============================");
 
-
-// Soma das colunas
-Console.WriteLine("Soma de cada coluna:");
-for (int l = 0; l < qntlinhas; l++)
+void SumDiagonals(int[,] matrix, int lines, int columns)
 {
-    soma = 0;
-    for (int c = 0; c < qntColunas; c++)
+    Console.WriteLine("Diagonals:");
+
+    int sumD1 = 0, sumD2 = 0;
+    for (int l = 0, c = columns - 1; l < lines; l++, c--)
     {
-        soma += matriz[c, l];
+        sumD1 += matrix[l, l];
+        sumD2 += matrix[l, c];
     }
-    Console.WriteLine($"Coluna[{l}] = {soma}");
+
+    Console.WriteLine($"Diagonal 1 = {sumD1}");
+    Console.WriteLine($"Diagonal 2 = {sumD2}");
+    PrintLine();
 }
-Console.WriteLine("=============================");
 
 
-// Soma da diagonal
-Console.WriteLine("Soma na direita pra esquerda:");
-soma = 0;
-for (int l = 0; l < qntlinhas; l++)
+void PrintLine()
 {
-    soma += matriz[l, l];
+    Console.WriteLine("=============================");
 }
-Console.WriteLine($"Resultado = {soma}");
-Console.WriteLine("=============================");
 
 
-// Soma da diagonal
-Console.WriteLine("Soma na esquerda pra direita:");
-soma = 0;
 
-for (int linha = 0, coluna = qntColunas - 1; linha < qntlinhas; linha++, coluna--)
+/*Main*/
+int lines = 3, columns = 3, option;
+int[,] matrix = new int[lines, columns];
+
+do
 {
-    soma += matriz[linha, coluna];
-}
-Console.WriteLine($"Resultado = {soma}");
-Console.WriteLine("=============================");
+    Console.Clear();
+    Console.WriteLine("=====Manipulating matrixes=====");
+    
+    SortMatrix(matrix, lines, columns);
+    PrintMatrix(matrix, lines, columns, "Matrix:");
+    
+    option = Menu();
 
+    switch (option)
+    {
+        case 1:
+            SumLines(matrix, lines, columns);
+            break;
+        case 2:
+            SumColumns(matrix, lines, columns);
+            break;
+        case 3:
+            SumDiagonals(matrix, lines, columns);
+            break;
+        case 0:
+            Console.WriteLine("***End***");
+            break;
+        default:
+            Console.WriteLine("Invalid option!");
+            break;
+    }
+    Console.Write("\nPress any key to continue... ");
+    Console.ReadKey();
 
-Console.Write("\nDigite qualquer tecla para sair: ");
-Console.ReadKey();
+} while (option != 0);
